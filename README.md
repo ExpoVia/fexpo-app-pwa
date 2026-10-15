@@ -1,5 +1,9 @@
 # Fexpo App PWA
 
+## Mapa del recinto
+
+En modo local/demo, Mapa ofrece los planos originales en 2D y una vista interior 3D construida con los mismos contornos y lotes. Incluye selector de pabellón/planta, búsqueda, fichas de stands, NFC y GPS relativo para mover el avatar al caminar. Escala y orientación GPS provisionales, pendientes de georreferenciación. Detalles y prueba: [docs/CAMPUS_MAP.md](docs/CAMPUS_MAP.md).
+
 App de visitantes en React + Vite + TypeScript, con modo local independiente del backend y un modo conectado preparado para retomarlo. Conserva la interfaz clara/oscura de los bocetos.
 
 ## Modo actual: sin backend de Fexpo
