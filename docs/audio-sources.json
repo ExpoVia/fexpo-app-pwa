@@ -1,0 +1,123 @@
+{
+  "voiceSamples": [
+    {
+      "id": "matilda-v4-welcome",
+      "group": "voice",
+      "voice": "a",
+      "phrase": "welcome",
+      "label": "Matilda · Bienvenida",
+      "text": "¡Hola! Qué bueno tenerte en Fexpo. Explora la feria a tu ritmo, descubre nuevos stands y disfruta la experiencia.",
+      "synthesisText": "[warm, friendly, conversational, gentle mid register, relaxed natural pace] ¡Hola! Qué bueno tenerte en Fexpo. [short pause] Explora la feria a tu ritmo, descubre nuevos stands... y disfruta la experiencia."
+    },
+    {
+      "id": "matilda-v4-instruction",
+      "group": "voice",
+      "voice": "a",
+      "phrase": "instruction",
+      "label": "Matilda · Cómo usar NFC",
+      "text": "Acerca tu celular a la etiqueta NFC del stand y espera un momento. Te avisaremos cuando tu visita quede registrada. También puedes mostrar tu código QR.",
+      "synthesisText": "[warm, friendly, conversational, gentle mid register, relaxed natural pace] Acerca tu celular a la etiqueta ene efe ce del stand... y espera un momento. [short pause] Te avisaremos cuando tu visita quede registrada. También puedes mostrar tu código cu erre."
+    }
+  ],
+  "voicePlan": "Free",
+  "soundSource": {
+    "clips": [
+      {
+        "id": "notification-video-05",
+        "number": 5,
+        "start": 24.64,
+        "end": 26.03,
+        "duration": 1.39,
+        "file": "sonido-05.mp3",
+        "bytes": 34604,
+        "sha256": "4bc5def3447f2264b3cd37d12c68e68429d24c404a67108a4acc7d50e65adb7e"
+      },
+      {
+        "id": "notification-video-07",
+        "number": 7,
+        "start": 30.01,
+        "end": 31.16,
+        "duration": 1.15,
+        "file": "sonido-07.mp3",
+        "bytes": 28844,
+        "sha256": "441aff2c811c77706e97f95091362ada6e7373de3c8c32f49d164f19090f3585"
+      }
+    ],
+    "method": "Cropped from the 11–43 second effects section; short silent padding retained; no pitch, volume or speed alterations. WAV is decoded PCM; MP3 is encoded at 192 kbps.",
+    "video": "https://www.youtube.com/watch?v=bOJ8eR5ee0s",
+    "author": "Creator Assets",
+    "authorCollection": "https://creatorassets.com/audio/notification/"
+  },
+  "voiceGeneration": {
+    "nfcGuide": {
+      "status": "complete",
+      "requestedAt": "2026-10-14T16:16:51.66Z",
+      "model": "eleven_v4",
+      "voiceId": "XrExE9yKIg1WjnnlVkGX",
+      "voiceName": "Matilda",
+      "direction": "Warm, friendly, conversational; gentle mid register; relaxed natural pace; light expressive intonation; clear Latin American Spanish; brief natural pauses",
+      "displayText": "Acerca tu celular a la etiqueta NFC del stand y espera un momento. Te avisaremos cuando tu visita quede registrada. También puedes mostrar tu código QR.",
+      "request": {
+        "text": "[warm, friendly, conversational, gentle mid register, relaxed natural pace] Acerca tu celular a la etiqueta ene efe ce del stand... y espera un momento. [short pause] Te avisaremos cuando tu visita quede registrada. También puedes mostrar tu código cu erre.",
+        "model_id": "eleven_v4",
+        "language_code": "es",
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.65
+        }
+      },
+      "bytes": 177675,
+      "completedAt": "2026-10-14T16:16:55.67Z",
+      "characterCost": "257",
+      "requestId": "oQqxOJiJ978XwyZKnO12",
+      "traceId": "138b9ddf9336c9e14e421151cd4490bf"
+    },
+    "welcome": {
+      "status": "complete",
+      "requestedAt": "2026-10-14T16:16:48.031Z",
+      "model": "eleven_v4",
+      "voiceId": "XrExE9yKIg1WjnnlVkGX",
+      "voiceName": "Matilda",
+      "direction": "Warm, friendly, conversational; gentle mid register; relaxed natural pace; light expressive intonation; clear Latin American Spanish; brief natural pauses",
+      "displayText": "¡Hola! Qué bueno tenerte en Fexpo. Explora la feria a tu ritmo, descubre nuevos stands y disfruta la experiencia.",
+      "request": {
+        "text": "[warm, friendly, conversational, gentle mid register, relaxed natural pace] ¡Hola! Qué bueno tenerte en Fexpo. [short pause] Explora la feria a tu ritmo, descubre nuevos stands... y disfruta la experiencia.",
+        "model_id": "eleven_v4",
+        "language_code": "es",
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.65
+        }
+      },
+      "bytes": 136715,
+      "completedAt": "2026-10-14T16:16:51.656Z",
+      "characterCost": "206",
+      "requestId": "jVsQIiqICMpRU31zoKCH",
+      "traceId": "4ece40e51f1a669f4e421151cd449364"
+    }
+  },
+  "files": [
+    {
+      "bytes": 177675,
+      "sha256": "f33d41dd851b14150022320a0b5eed6046c41d8c56b5c97223743c9a4477bb43",
+      "file": "matilda-nfc.mp3"
+    },
+    {
+      "bytes": 136715,
+      "sha256": "e1cf16969152d83ddad8c35b04c491708224bcb63979a7023320b977f90c7562",
+      "file": "matilda-welcome.mp3"
+    },
+    {
+      "bytes": 34604,
+      "sha256": "4bc5def3447f2264b3cd37d12c68e68429d24c404a67108a4acc7d50e65adb7e",
+      "file": "sonido-05.mp3"
+    },
+    {
+      "bytes": 28844,
+      "sha256": "441aff2c811c77706e97f95091362ada6e7373de3c8c32f49d164f19090f3585",
+      "file": "sonido-07.mp3"
+    }
+  ],
+  "defaultVoice": "Matilda",
+  "voiceProvider": "ElevenLabs"
+}
