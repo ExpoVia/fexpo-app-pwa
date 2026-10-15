@@ -1,3 +1,5 @@
+import { LIVE } from '@/services/config';
+import { LiveMap } from './LiveMap';
 import { useState, type CSSProperties } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import {
@@ -124,7 +126,7 @@ function ZoomButtons() {
     </div>
   );
 }
-export function MapPage() {
+function DemoMapPage() {
   const [params, setParams] = useSearchParams();
   const selectedId = params.get('stand');
   const initialStand = STANDS.find((s) => s.id === selectedId);
@@ -466,4 +468,8 @@ export function MapPage() {
       )}
     </div>
   );
+}
+
+export function MapPage() {
+  return LIVE ? <LiveMap /> : <DemoMapPage />;
 }

@@ -1,3 +1,6 @@
+import { useExperience, useStands } from '@/state/experience';
+import { LIVE } from '@/services/config';
+import { LiveStand } from './LiveStand';
 import { useEffect, useRef, useState, useId } from 'react';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
 import {
@@ -24,7 +27,8 @@ export function StandsPage() {
   const [params, setParams] = useSearchParams();
   const category = params.get('category') ?? 'general';
   const [favorites, setFavorites] = useState(false);
-  const state = useDemo();
+  const state = useExperience();
+  const STANDS = useStands();
   const filtered = STANDS.filter(
     (s) =>
       (category === 'general' || s.category === category) &&
@@ -35,7 +39,11 @@ export function StandsPage() {
       <div className="section-intro">
         <span className="eyebrow">NUEVAS CONEXIONES</span>
         <h2>Encuentra tu próxima parada.</h2>
-        <p>Seis empresas de ejemplo para explorar Fexpo.</p>
+        <p>
+          {LIVE
+            ? 'Conoce a los expositores de la feria.'
+            : 'Seis empresas de ejemplo para explorar Fexpo.'}
+        </p>
       </div>
       <div className="catalog-toolbar">
         <Link className="button secondary" to="/map">
@@ -69,7 +77,8 @@ export function StandsPage() {
         ))}
       </div>
       <small className="muted">
-        {filtered.length} {filtered.length === 1 ? 'stand' : 'stands'} · expositores ficticios
+        {filtered.length} {filtered.length === 1 ? 'stand' : 'stands'} ·{' '}
+        {LIVE ? 'expositores del evento' : 'expositores ficticios'}
       </small>
       {filtered.length ? (
         filtered.map((stand) => (
@@ -78,7 +87,7 @@ export function StandsPage() {
             <span className="grow">
               <strong>{stand.name}</strong>
               <small>
-                {categoryMeta[stand.category].label} · {stand.boothCode}
+                {stand.categoryLabel || categoryMeta[stand.category].label} · {stand.boothCode}
               </small>
               <span className="catalog-description">{stand.description}</span>
               <span className="row">
@@ -88,7 +97,9 @@ export function StandsPage() {
                     Visitado
                   </Pill>
                 ) : (
-                  <Pill>+50 pts demo</Pill>
+                  <Pill>
+                    {LIVE ? (stand.points ? `+${stand.points} pts` : 'Descubrir') : '+50 pts demo'}
+                  </Pill>
                 )}
                 {state.favorites.includes(stand.id) && <Bookmark size={14} />}
               </span>
@@ -251,7 +262,7 @@ function WheelGame() {
     </div>
   );
 }
-export function StandPage() {
+function DemoStandPage() {
   const { id } = useParams();
   const stand = STANDS.find((s) => s.id === id);
   const state = useDemo();
@@ -568,4 +579,8 @@ export function StandPage() {
       )}
     </div>
   );
+}
+
+export function StandPage() {
+  return LIVE ? <LiveStand /> : <DemoStandPage />;
 }
