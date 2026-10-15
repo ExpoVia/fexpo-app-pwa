@@ -1,0 +1,72 @@
+[
+  {
+    "theme": "light",
+    "name": "inicio",
+    "width": 390,
+    "height": 844,
+    "overflow": false
+  },
+  {
+    "theme": "light",
+    "name": "mapa",
+    "width": 390,
+    "height": 844,
+    "overflow": false
+  },
+  {
+    "theme": "light",
+    "name": "checkin",
+    "width": 390,
+    "height": 844,
+    "overflow": false
+  },
+  {
+    "theme": "light",
+    "name": "misiones",
+    "width": 390,
+    "height": 844,
+    "overflow": false
+  },
+  {
+    "theme": "light",
+    "name": "perfil",
+    "width": 390,
+    "height": 844,
+    "overflow": false
+  },
+  {
+    "theme": "dark",
+    "name": "inicio",
+    "width": 390,
+    "height": 844,
+    "overflow": false
+  },
+  {
+    "theme": "dark",
+    "name": "mapa",
+    "width": 390,
+    "height": 844,
+    "overflow": false
+  },
+  {
+    "theme": "dark",
+    "name": "checkin",
+    "width": 390,
+    "height": 844,
+    "overflow": false
+  },
+  {
+    "theme": "dark",
+    "name": "misiones",
+    "width": 390,
+    "height": 844,
+    "overflow": false
+  },
+  {
+    "theme": "dark",
+    "name": "perfil",
+    "width": 390,
+    "height": 844,
+    "overflow": false
+  }
+]
