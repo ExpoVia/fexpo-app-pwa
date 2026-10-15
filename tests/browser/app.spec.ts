@@ -68,10 +68,11 @@ test('cancelar la lectura no registra visitas', async ({ page }) => {
 
 test('búsqueda, cambio de planta y perfil del stand', async ({ page }) => {
   await page.goto('/map');
+  await page.getByRole('button', { name: '2D', exact: true }).click();
   await page.getByRole('textbox', { name: 'Buscar stands y empresas' }).fill('altura');
   await page.getByRole('button', { name: /Altura Labs/ }).click();
   await expect(page.getByRole('heading', { name: 'Pabellón Bolivia' })).toBeVisible();
-  await page.getByRole('link', { name: 'Ver perfil del stand' }).click();
+  await page.getByRole('link', { name: 'Ver perfil', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Altura Labs' })).toBeVisible();
   await page.getByRole('button', { name: 'Guardar stand' }).click();
   await expect(page.getByRole('button', { name: 'Stand guardado' })).toHaveAttribute(
@@ -114,7 +115,7 @@ test('la PWA abre rutas y recursos offline después de la primera carga', async 
   expect((await manifest.json()).display).toBe('standalone');
   await context.setOffline(true);
   await page.goto('/map');
-  await expect(page.getByRole('heading', { name: 'Vista general' })).toBeVisible();
+  await expect(page.getByRole('region', { name: 'Mapa interactivo FIPAZ' })).toBeVisible();
   await expect(page.getByText('Sin conexión · puedes explorar la demo')).toBeVisible();
   expect(
     await page.evaluate(
