@@ -5,6 +5,7 @@ import { STANDS } from '@/data/demo-data';
 import { MISSIONS } from '@/data/missions';
 import { REWARDS } from '@/data/rewards';
 import type { Mission } from '@/types/domain';
+import { LOCAL } from '@/services/config';
 
 export interface DemoVisit {
   standId: string;
@@ -111,9 +112,9 @@ export const useDemo = create<DemoState>()(
   persist(
     (update, read) => ({
       hydrated: false,
-      signedIn: true,
+      signedIn: !LOCAL,
       name: 'Visitante demo',
-      visits: [seedVisit],
+      visits: LOCAL ? [] : [seedVisit],
       favorites: [],
       redeemed: [],
       notices: [],
@@ -191,7 +192,7 @@ export const useDemo = create<DemoState>()(
         }),
     }),
     {
-      name: 'fexpo-pwa-visual-v1',
+      name: LOCAL ? 'fexpo-local-experience-v1' : 'fexpo-pwa-visual-v1',
       storage: createJSONStorage(() => storage),
       partialize: (state) => ({
         signedIn: state.signedIn,
