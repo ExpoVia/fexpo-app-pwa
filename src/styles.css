@@ -1415,6 +1415,328 @@ strong {
   color: var(--muted);
 }
 
+.connection-status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  background: var(--blue-soft);
+  box-shadow: none;
+}
+.connection-status strong {
+  font-size: 12px;
+}
+.connection-status small {
+  display: block;
+  font-size: 11px;
+  line-height: 1.55;
+  color: var(--muted);
+  margin-top: 4px;
+  overflow-wrap: anywhere;
+}
+.connection-status > svg {
+  color: var(--blue-ink);
+  flex-shrink: 0;
+}
+.feedback-settings button {
+  text-align: left;
+  width: 100%;
+}
+.toggle {
+  width: 42px;
+  min-width: 42px;
+  height: 25px;
+  border-radius: 99px;
+  background: var(--track);
+  padding: 3px;
+  transition: background 0.15s;
+}
+.toggle i {
+  display: block;
+  width: 19px;
+  height: 19px;
+  border-radius: 50%;
+  background: var(--surface);
+  box-shadow: 0 1px 4px #0002;
+  transition: transform 0.15s;
+}
+.toggle.on {
+  background: var(--blue);
+}
+.toggle.on i {
+  transform: translateX(17px);
+  background: #fff;
+}
+.live-passport {
+  padding: 20px;
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  height: auto;
+  background: var(--hero);
+  color: var(--hero-ink);
+  border: 1px solid var(--border);
+}
+.live-passport > p {
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--hero-muted);
+  margin: 0;
+}
+.live-passport .passport-stats {
+  width: 100%;
+}
+.google-login {
+  align-items: stretch;
+}
+.google-login p {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.google-login > div {
+  min-height: 44px;
+  max-width: 100%;
+}
+.floor-svg a:focus-visible rect {
+  stroke: var(--ink);
+  stroke-width: 6;
+}
+.welcome-screen {
+  position: relative;
+  min-height: 100svh;
+  overflow: hidden;
+  background: #071326;
+  color: #fff;
+  isolation: isolate;
+}
+.welcome-backdrop,
+.welcome-shade {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+.welcome-backdrop {
+  object-fit: cover;
+  object-position: center 60%;
+}
+.welcome-shade {
+  background: linear-gradient(180deg, #06112618 25%, #06112625 40%, #061126db 72%, #061126 100%);
+}
+.welcome-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: max(24px, env(safe-area-inset-top)) 25px 0;
+}
+.welcome-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font:
+    700 23px Poppins,
+    Inter,
+    sans-serif;
+}
+.welcome-brand .brand-mark {
+  width: 38px;
+  height: 38px;
+  font-size: 22px;
+  background: #113e59;
+  border: 1px solid #ffffff24;
+}
+.welcome-city {
+  font-size: 9px;
+  font-weight: 650;
+  letter-spacing: 0.16em;
+  text-align: right;
+}
+.welcome-content {
+  min-height: calc(100svh - 66px);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 170px 25px max(24px, env(safe-area-inset-bottom));
+  max-width: 520px;
+  margin: 0 auto;
+}
+.welcome-kicker {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  color: #f5d98e;
+}
+.welcome-copy h1 {
+  font:
+    700 clamp(56px, 17vw, 84px) / 1.08 Poppins,
+    Inter,
+    sans-serif;
+  letter-spacing: -0.05em;
+  margin: 8px 0 16px;
+}
+.welcome-copy h1 span {
+  display: block;
+  font-size: clamp(25px, 7vw, 34px);
+  line-height: 1.2;
+  letter-spacing: -0.035em;
+  margin-top: 8px;
+}
+.welcome-copy > p {
+  color: #e0e8f2;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.welcome-actions {
+  display: grid;
+  gap: 14px;
+  margin-top: 30px;
+}
+.google-connect {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 54px;
+  border-radius: 14px;
+  background: #fff;
+  border: 1px solid #747775;
+  color: #1f1f1f;
+  font:
+    500 14px Arial,
+    sans-serif;
+  padding: 12px 18px;
+}
+.google-connect > span {
+  flex: 1;
+  text-align: center;
+}
+.google-connect > svg {
+  flex-shrink: 0;
+}
+.google-connect:disabled {
+  opacity: 0.8;
+  cursor: not-allowed;
+}
+.welcome-privacy {
+  color: #bdc8d9;
+  text-align: center;
+  font-size: 10px;
+  line-height: 1.6;
+  max-width: 320px;
+  justify-self: center;
+}
+.welcome-nfc {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 44px;
+  color: #e5f1ff;
+  font-size: 13px;
+  font-weight: 600;
+}
+.welcome-error {
+  color: #ffe4b2;
+  border-radius: 12px;
+  padding: 12px;
+  background: #ffffff0a;
+  font-size: 12px;
+  line-height: 1.6;
+}
+.welcome-error button {
+  color: #fff;
+  text-decoration: underline;
+  padding: 8px 0 0;
+  min-height: 36px;
+}
+.nfc-result dl {
+  display: grid;
+  gap: 13px;
+}
+.nfc-result dl > div {
+  display: grid;
+  gap: 5px;
+}
+.nfc-result dt,
+.nfc-record small {
+  color: var(--muted);
+  font-size: 11px;
+}
+.nfc-result dd {
+  font-size: 14px;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+  margin: 0;
+}
+.nfc-result .row > svg {
+  color: var(--green);
+}
+.nfc-record pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font:
+    12px/1.6 ui-monospace,
+    monospace;
+  background: var(--surface-muted);
+  padding: 12px;
+  border-radius: 10px;
+  margin-top: 5px;
+}
+.nfc-error p,
+.nfc-privacy p {
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+.nfc-privacy > svg {
+  flex-shrink: 0;
+  color: var(--blue-ink);
+}
+.avatar > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+@media (min-width: 900px) {
+  .welcome-backdrop {
+    object-position: center 72%;
+  }
+  .welcome-shade {
+    background: linear-gradient(90deg, #061126d9, #06112692 40%, #06112622 75%);
+  }
+  .welcome-header {
+    padding: 40px 6vw 0;
+  }
+  .welcome-content {
+    min-height: calc(100svh - 78px);
+    margin-left: 6vw;
+    padding: 80px 0 55px;
+    max-width: 430px;
+  }
+  .welcome-copy h1 {
+    font-size: 86px;
+  }
+  .welcome-copy h1 span {
+    font-size: 36px;
+  }
+}
+@media (max-height: 700px) and (max-width: 899px) {
+  .welcome-content {
+    padding-top: 90px;
+  }
+  .welcome-copy h1 {
+    font-size: 52px;
+  }
+  .welcome-actions {
+    margin-top: 20px;
+  }
+}
 /* Map overview and floor plans */
 .search-field {
   display: flex;
@@ -2885,4 +3207,16 @@ strong {
   .wheel {
     transition: none;
   }
+}
+
+.welcome-google-note {
+  color: #bdc8d9;
+  font-size: 10px;
+  text-align: center;
+  margin-top: -9px;
+}
+.welcome-try {
+  min-height: 54px;
+  border: 1px solid #ffffff28;
+  background: #087ec2;
 }

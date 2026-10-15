@@ -1,10 +1,12 @@
+import { LIVE } from '@/services/config';
+import { useExperience, useStands } from '@/state/experience';
+import { useLive } from '@/state/live';
 import { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronRight, FlaskConical } from 'lucide-react';
-import { STANDS } from '@/data/demo-data';
 import { EVENTS, eventStatus } from '@/data/events';
 import { MISSIONS } from '@/data/missions';
-import { useDemo, pointsFor, levelFor, missionValue } from '@/state/demo';
+import { missionValue } from '@/state/demo';
 import { Art, CategoryTile, Progress, SectionTitle } from '@/ui/components';
 
 const actions = [
@@ -16,7 +18,10 @@ const actions = [
   { path: '/my-qr', name: 'Mi QR', art: 'my-qr', tint: 'cyan' },
 ];
 export function HomePage() {
-  const state = useDemo();
+  const state = useExperience();
+  const STANDS = useStands();
+  const live = useLive();
+  const events = LIVE ? EVENTS.filter((e) => e.id.includes('fipaz')) : EVENTS;
   const carousel = useRef<HTMLDivElement>(null);
   const [index, setIndex] = useState(0);
   const routeProgress = missionValue(MISSIONS[0], state.visits);
@@ -26,7 +31,7 @@ export function HomePage() {
         <h2>Ferias</h2>
         <span className="demo-label">
           <FlaskConical size={12} />
-          Vista previa
+          {LIVE ? 'FIPAZ' : 'Vista previa'}
         </span>
       </div>
       <div
@@ -37,7 +42,7 @@ export function HomePage() {
           setIndex(Math.round(e.currentTarget.scrollLeft / (first.offsetWidth + 12)));
         }}
       >
-        {EVENTS.map((event) => (
+        {events.map((event) => (
           <Link className="event-card" to={`/events/${event.id}`} key={event.id}>
             <span className="event-banner">
               <img
@@ -45,7 +50,9 @@ export function HomePage() {
                 alt={`Feria ${event.name}`}
                 fetchPriority="high"
               />
-              <span className="event-status">{eventStatus(event, Date.now())}</span>
+              <span className="event-status">
+                {LIVE ? 'Descubre la feria' : eventStatus(event, Date.now())}
+              </span>
               {!event.hasText && (
                 <span className="event-wordmark">
                   {event.name}
@@ -55,15 +62,13 @@ export function HomePage() {
             </span>
             <span className="event-caption">
               <strong>{event.name}</strong>
-              <small>
-                {event.date} · {event.location}
-              </small>
+              <small>{LIVE ? event.location : `${event.date} · ${event.location}`}</small>
             </span>
           </Link>
         ))}
       </div>
       <div className="carousel-dots" aria-label="Seleccionar feria">
-        {EVENTS.map((event, i) => (
+        {events.map((event, i) => (
           <button
             aria-label={`Ver ${event.name}`}
             aria-pressed={i === index}
@@ -100,16 +105,18 @@ export function HomePage() {
         <div className="row">
           <Art name="level" size={40} />
           <span className="grow">
-            <strong>Nivel {levelFor(state.visits)}</strong>
+            <strong>Nivel {state.level ?? '—'}</strong>
             <small>
-              {state.visits.length} de {STANDS.length} stands
+              {LIVE && !STANDS.length
+                ? 'Esperando catálogo'
+                : `${state.visits.length} de ${STANDS.length} stands`}
             </small>
           </span>
-          <b className="level-points">{pointsFor(state.visits, state.redeemed)}</b>
+          <b className="level-points">{state.points ?? '—'}</b>
           <small>pts</small>
         </div>
         <div className="segments" aria-label={`${state.visits.length} stands visitados`}>
-          {STANDS.map((stand) => (
+          {STANDS.slice(0, 12).map((stand) => (
             <span
               className={state.visits.some((v) => v.standId === stand.id) ? 'done' : ''}
               key={stand.id}
@@ -120,10 +127,14 @@ export function HomePage() {
       <Link to="/missions" className="route-card">
         <Art name="route" size={39} />
         <span className="grow">
-          <strong>Ruta FIPAZ</strong>
-          <Progress value={routeProgress} total={3} label="Ruta FIPAZ" />
+          <strong>{LIVE ? 'Tu siguiente nivel' : 'Ruta FIPAZ'}</strong>
+          <Progress
+            value={LIVE ? (live.progress?.rankingScore ?? 0) : routeProgress}
+            total={LIVE ? (live.progress?.level.nextLevelScore ?? 1) : 3}
+            label={LIVE ? 'Siguiente nivel' : 'Ruta FIPAZ'}
+          />
         </span>
-        <b>{routeProgress}/3</b>
+        <b>{LIVE ? (live.progress?.rankingScore ?? '—') : `${routeProgress}/3`}</b>
       </Link>
       <SectionTitle to="/stands">Stands destacados</SectionTitle>
       <div className="featured-stands">
@@ -136,7 +147,9 @@ export function HomePage() {
         ))}
       </div>
       <p className="footnote">
-        Explora con libertad. Los stands y el progreso de esta vista previa son de demostración.
+        {LIVE
+          ? 'Tu saldo y tus visitas se actualizan con la confirmación de la feria.'
+          : 'Explora con libertad. Los stands y el progreso de esta vista previa son de demostración.'}
       </p>
     </div>
   );

@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import type { StandCategory } from '@/types/domain';
+import { LIVE } from '@/services/config';
 
 export function Art({
   name,
@@ -61,14 +62,18 @@ export function Progress({
     </span>
   );
 }
-export function Points({ value, small = false }: { value: number; small?: boolean }) {
+export function Points({ value, small = false }: { value: number | null; small?: boolean }) {
   return (
     <span
       className={`points-pill ${small ? 'small' : ''}`}
-      aria-label={`${value} puntos de demostración`}
+      aria-label={
+        value == null
+          ? 'Saldo pendiente de actualizar'
+          : `${value} puntos${LIVE ? '' : ' de demostración'}`
+      }
     >
       <CircleStar size={small ? 14 : 18} strokeWidth={2.3} />
-      {value}
+      {value ?? '—'}
       {small && ' pts'}
     </span>
   );

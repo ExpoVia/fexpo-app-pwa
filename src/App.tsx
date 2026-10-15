@@ -7,24 +7,31 @@ import { MissionsPage, RewardsPage } from './pages/Missions';
 import { ProfilePage } from './pages/Profile';
 import { StandsPage, StandPage } from './pages/Stands';
 import { QrPage, NotificationsPage, EventPage, NotFoundPage } from './pages/Secondary';
+import { StandTagLink } from './pages/LiveCheckin';
+import { LocalEntry } from './pages/Welcome';
+import { NfcProbe } from './pages/NfcProbe';
 
 export function App() {
   return (
     <Routes>
-      <Route element={<Shell />}>
-        <Route index element={<HomePage />} />
-        <Route path="map" element={<MapPage />} />
-        <Route path="scan" element={<CheckinPage />} />
-        <Route path="missions" element={<MissionsPage />} />
-        <Route path="profile" element={<ProfilePage />} />
-        <Route path="stands" element={<StandsPage />} />
-        <Route path="stands/:id" element={<StandPage />} />
-        <Route path="my-qr" element={<QrPage />} />
-        <Route path="rewards" element={<RewardsPage />} />
-        <Route path="notifications" element={<NotificationsPage />} />
-        <Route path="events/:id" element={<EventPage />} />
-        <Route path="check-in" element={<Navigate to="/scan" replace />} />
-        <Route path="*" element={<NotFoundPage />} />
+      <Route element={<LocalEntry />}>
+        <Route element={<Shell />}>
+          <Route index element={<HomePage />} />
+          <Route path="map" element={<MapPage />} />
+          <Route path="scan" element={<CheckinPage />} />
+          <Route path="nfc-test" element={<NfcProbe />} />
+          <Route path="missions" element={<MissionsPage />} />
+          <Route path="profile" element={<ProfilePage />} />
+          <Route path="stands" element={<StandsPage />} />
+          <Route path="stands/:id" element={<StandPage />} />
+          <Route path="my-qr" element={<QrPage />} />
+          <Route path="rewards" element={<RewardsPage />} />
+          <Route path="notifications" element={<NotificationsPage />} />
+          <Route path="events/:id" element={<EventPage />} />
+          <Route path="check-in" element={<Navigate to="/scan" replace />} />
+          <Route path="e/:event/s/:stand" element={<StandTagLink />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Route>
       </Route>
     </Routes>
   );

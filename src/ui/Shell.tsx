@@ -18,9 +18,14 @@ import {
   ArrowUpRight,
 } from 'lucide-react';
 import { useRegisterSW } from 'virtual:pwa-register/react';
-import { useDemo, useUI, pointsFor } from '@/state/demo';
+import { useUI } from '@/state/demo';
 import { Points } from './components';
 import { useTheme } from './theme';
+import { useExperience } from '@/state/experience';
+import { bootstrap, flushPending, loadCatalog, syncProgress } from '@/state/live';
+import { LIVE, LOCAL } from '@/services/config';
+import { AudioHost } from '@/features/audio/AudioHost';
+import { ConnectionStatus } from './Connection';
 
 const tabs = [
   { path: '/', label: 'Inicio', icon: Home },
@@ -32,6 +37,7 @@ const tabs = [
 const titles: Record<string, string> = {
   '/map': 'Mapa',
   '/scan': 'Check-in',
+  '/nfc-test': 'Prueba NFC',
   '/missions': 'Misiones',
   '/profile': 'Perfil',
   '/stands': 'Stands',
@@ -47,7 +53,7 @@ interface InstallEvent extends Event {
 export function Shell() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  const state = useDemo();
+  const state = useExperience();
   const toast = useUI((s) => s.toast);
   const notify = useUI((s) => s.notify);
   const { mode, setMode } = useTheme();
@@ -59,6 +65,33 @@ export function Shell() {
     updateServiceWorker,
   } = useRegisterSW();
   const secondary = !tabs.some((tab) => tab.path === pathname);
+  useEffect(() => {
+    if (LIVE) void bootstrap();
+  }, []);
+  useEffect(() => {
+    if (!LIVE) return;
+    const foreground = () => {
+      if (!document.hidden && navigator.onLine) {
+        void syncProgress();
+        void flushPending();
+      }
+    };
+    const online = () => {
+      foreground();
+      void loadCatalog();
+    };
+    foreground();
+    const timer = setInterval(foreground, pathname === '/my-qr' ? 4000 : 15000);
+    window.addEventListener('online', online);
+    window.addEventListener('focus', foreground);
+    document.addEventListener('visibilitychange', foreground);
+    return () => {
+      clearInterval(timer);
+      window.removeEventListener('online', online);
+      window.removeEventListener('focus', foreground);
+      document.removeEventListener('visibilitychange', foreground);
+    };
+  }, [pathname]);
   const title =
     titles[pathname] ??
     (pathname.startsWith('/stands/')
@@ -125,11 +158,13 @@ export function Shell() {
           ))}
         </nav>
         <div className="preview-bottom">
-          <span className="preview-tag">Prototipo visual</span>
+          <span className="preview-tag">
+            {LIVE ? 'Datos del evento' : LOCAL ? 'Modo local · NFC real' : 'Demostración'}
+          </span>
           <p>
-            Datos de demostración.
-            <br />
-            Backend y NFC en la siguiente etapa.
+            {LIVE
+              ? 'Tu pasaporte, tus conexiones y tu recorrido en la feria.'
+              : 'Datos ficticios para explorar la experiencia.'}
           </p>
           <div className="desktop-themes">
             {(
@@ -173,7 +208,7 @@ export function Shell() {
             </Link>
           ) : null}
           <span className="header-title">{title}</span>
-          <Points value={pointsFor(state.visits, state.redeemed)} />
+          <Points value={state.points} />
           <Link
             className="icon-button bell-button"
             to="/notifications"
@@ -189,12 +224,17 @@ export function Shell() {
         {!online && (
           <div className="offline-banner" role="status">
             <WifiOff size={15} />
-            Sin conexión · puedes explorar la vista previa
+            {LIVE
+              ? 'Sin conexión · las visitas pendientes se enviarán al volver'
+              : 'Sin conexión · puedes explorar la demo'}
           </div>
         )}
         <main id="content" className="page" key={pathname}>
           {state.hydrated ? (
-            <Outlet />
+            <>
+              <ConnectionStatus />
+              <Outlet />
+            </>
           ) : (
             <div className="loading-view" role="status" aria-label="Cargando tu recorrido">
               <span />
@@ -270,6 +310,7 @@ export function Shell() {
           </div>
         )}
       </div>
+      <AudioHost />
     </div>
   );
 }
