@@ -115,7 +115,7 @@ test('la PWA abre rutas y recursos offline después de la primera carga', async 
   await context.setOffline(true);
   await page.goto('/map');
   await expect(page.getByRole('heading', { name: 'Vista general' })).toBeVisible();
-  await expect(page.getByText('Sin conexión · puedes explorar la vista previa')).toBeVisible();
+  await expect(page.getByText('Sin conexión · puedes explorar la demo')).toBeVisible();
   expect(
     await page.evaluate(
       () => [...document.images].filter((i) => !i.complete || !i.naturalWidth).length,

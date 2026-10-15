@@ -2,6 +2,12 @@ import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
   testDir: './tests/browser',
+  testMatch:
+    process.env.PWA_TEST_MODE === 'local'
+      ? 'local.spec.ts'
+      : process.env.PWA_TEST_MODE === 'live'
+        ? 'live.spec.ts'
+        : 'app.spec.ts',
   fullyParallel: false,
   workers: 1,
   timeout: 30_000,
