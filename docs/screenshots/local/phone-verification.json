@@ -1,0 +1,16 @@
+{
+  "date": "2026-10-15",
+  "deviceModel": "M2101K6G",
+  "usbAuthorized": true,
+  "nfcEnabled": true,
+  "screenUnlocked": true,
+  "url": "http://localhost:4174/nfc-test",
+  "secureContext": true,
+  "webNfcAvailable": true,
+  "realReadingConfirmedByUser": true,
+  "realReadingConfirmedByDOM": true,
+  "uidExposed": true,
+  "apiResourceRequests": 0,
+  "googleError": "origin_mismatch",
+  "googleRealLoginVerified": false
+}
