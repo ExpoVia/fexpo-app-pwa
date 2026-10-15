@@ -1,3 +1,6 @@
+import { LIVE, LOCAL } from '@/services/config';
+import { NfcProbe } from './NfcProbe';
+import { LiveCheckin } from './LiveCheckin';
 import { useEffect, useRef, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import {
@@ -12,6 +15,8 @@ import {
 import { STANDS } from '@/data/demo-data';
 import { useDemo, type Receipt } from '@/state/demo';
 import { Art, Modal, Pill, CircleStar } from '@/ui/components';
+import { audioFeedback } from '@/features/audio/feedback';
+import { useFeedback } from '@/features/audio/AudioHost';
 
 export function WalletPass({
   busy = false,
@@ -44,7 +49,7 @@ export function WalletPass({
     </div>
   );
 }
-export function CheckinPage() {
+function DemoCheckinPage() {
   const [params] = useSearchParams();
   const state = useDemo();
   const [target, setTarget] = useState(
@@ -62,6 +67,7 @@ export function CheckinPage() {
   useEffect(
     () => () => {
       if (timer.current) clearTimeout(timer.current);
+      useFeedback.getState().holdNotices(false);
     },
     [],
   );
@@ -69,9 +75,11 @@ export function CheckinPage() {
     if (timer.current) clearTimeout(timer.current);
     timer.current = null;
     setPhase('ready');
+    useFeedback.getState().holdNotices(false);
   }
   function simulate() {
     if (!STANDS.some((s) => s.id === target)) return;
+    useFeedback.getState().holdNotices(true);
     setPhase('reading');
     timer.current = setTimeout(() => {
       const result = useDemo.getState().visit(target);
@@ -84,6 +92,7 @@ export function CheckinPage() {
       setDuplicate(result.duplicate);
       setPhase('success');
       setReceipt(result);
+      audioFeedback.request('nfcRead');
     }, 1600);
   }
   const stand = STANDS.find((s) => s.id === target);
@@ -229,7 +238,10 @@ export function CheckinPage() {
       {receipt && receiptStand && (
         <Modal
           title={receipt.duplicate ? 'Visita ya registrada' : '¡Una nueva conexión!'}
-          onClose={() => setReceipt(null)}
+          onClose={() => {
+            setReceipt(null);
+            useFeedback.getState().holdNotices(false);
+          }}
         >
           <div className="visit-ticket">
             <div className="row">
@@ -277,15 +289,28 @@ export function CheckinPage() {
           <Link
             className="button secondary"
             to={`/stands/${receiptStand.id}`}
-            onClick={() => setReceipt(null)}
+            onClick={() => {
+              setReceipt(null);
+              useFeedback.getState().holdNotices(false);
+            }}
           >
             Ver stand
           </Link>
-          <button className="button" onClick={() => setReceipt(null)}>
+          <button
+            className="button"
+            onClick={() => {
+              setReceipt(null);
+              useFeedback.getState().holdNotices(false);
+            }}
+          >
             Listo
           </button>
         </Modal>
       )}
     </div>
   );
+}
+
+export function CheckinPage() {
+  return LIVE ? <LiveCheckin /> : LOCAL ? <NfcProbe /> : <DemoCheckinPage />;
 }

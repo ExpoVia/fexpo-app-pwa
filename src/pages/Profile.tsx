@@ -1,3 +1,6 @@
+import { LIVE, LOCAL } from '@/services/config';
+import { LocalProfile } from './LocalProfile';
+import { LiveProfile } from './LiveAccount';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
@@ -21,8 +24,9 @@ import { MISSIONS } from '@/data/missions';
 import { useDemo, levelFor, missionValue, pointsFor } from '@/state/demo';
 import { Art, Empty, MenuLink, Modal, Pill, SectionTitle } from '@/ui/components';
 import { useTheme } from '@/ui/theme';
+import { FeedbackPreferences } from '@/features/audio/AudioHost';
 
-export function ProfilePage() {
+function DemoProfilePage() {
   const state = useDemo();
   const { mode, setMode } = useTheme();
   const [flipped, setFlipped] = useState(false);
@@ -145,6 +149,8 @@ export function ProfilePage() {
           </button>
         ))}
       </div>
+      <SectionTitle>Audio y vibración</SectionTitle>
+      <FeedbackPreferences />
       <SectionTitle>Mi recorrido</SectionTitle>
       {state.visits.length ? (
         <div className="card menu-group">
@@ -258,4 +264,8 @@ export function ProfilePage() {
       )}
     </div>
   );
+}
+
+export function ProfilePage() {
+  return LIVE ? <LiveProfile /> : LOCAL ? <LocalProfile /> : <DemoProfilePage />;
 }
