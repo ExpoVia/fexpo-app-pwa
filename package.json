@@ -6,10 +6,16 @@
   "scripts": {
     "dev": "vite --host 0.0.0.0",
     "build": "tsc -b && vite build",
+    "build:demo": "node scripts/build-mode.mjs demo",
+    "build:live": "node scripts/build-mode.mjs live",
+    "build:local": "node scripts/build-mode.mjs local",
     "preview": "vite preview --host 0.0.0.0",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "test:e2e": "playwright test",
+    "test:e2e": "node scripts/test-e2e.mjs local",
+    "test:e2e:live": "node scripts/test-e2e.mjs live",
+    "test:e2e:demo": "node scripts/test-e2e.mjs demo",
+    "test:e2e:local": "node scripts/test-e2e.mjs local",
     "format": "prettier --write ."
   },
   "dependencies": {

@@ -1,9 +1,11 @@
 node_modules/
+.local-tools/
 dist/
 .vite/
 test-results/
 playwright-report/
 .env
+.env.local
 .env.*.local
 *.tsbuildinfo
 *.log
