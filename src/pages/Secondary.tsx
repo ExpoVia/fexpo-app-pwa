@@ -1,3 +1,6 @@
+import { useExperience } from '@/state/experience';
+import { LIVE } from '@/services/config';
+import { LiveQr } from './LiveAccount';
 import { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import QRCode from 'react-qr-code';
@@ -6,7 +9,7 @@ import { EVENTS, eventStatus } from '@/data/events';
 import { useDemo } from '@/state/demo';
 import { Art, Empty, Pill } from '@/ui/components';
 
-export function QrPage() {
+function DemoQrPage() {
   const state = useDemo();
   if (!state.signedIn)
     return (
@@ -59,9 +62,7 @@ export function QrPage() {
   );
 }
 export function NotificationsPage() {
-  const notices = useDemo((s) => s.notices);
-  const read = useDemo((s) => s.readNotices);
-  const clear = useDemo((s) => s.clearNotices);
+  const { notices, readNotices: read, clearNotices: clear } = useExperience();
   useEffect(() => {
     read();
   }, [read]);
@@ -85,7 +86,7 @@ export function NotificationsPage() {
                     hour: '2-digit',
                     minute: '2-digit',
                   })}{' '}
-                  · demostración
+                  · {LIVE ? 'tu recorrido' : 'demostración'}
                 </small>
               </span>
               <ArrowRight size={16} />
@@ -98,7 +99,9 @@ export function NotificationsPage() {
         </>
       ) : (
         <Empty title="Tu próxima aventura te espera">
-          Aquí verás las visitas simuladas, misiones completadas y novedades de tu recorrido.
+          {LIVE
+            ? 'Aquí verás las visitas confirmadas y novedades de tu recorrido.'
+            : 'Aquí verás las visitas simuladas, misiones completadas y novedades de tu recorrido.'}
         </Empty>
       )}
     </div>
@@ -106,7 +109,7 @@ export function NotificationsPage() {
 }
 export function EventPage() {
   const { id } = useParams();
-  const event = EVENTS.find((e) => e.id === id);
+  const event = EVENTS.find((e) => e.id === id && (!LIVE || e.id.includes('fipaz')));
   if (!event)
     return (
       <Empty
@@ -124,7 +127,7 @@ export function EventPage() {
         <img src={`/assets/events/${event.cover}`} alt={`Portada de ${event.name}`} />
         <span className="event-cover-shade" />
         <div>
-          <Pill>{eventStatus(event, Date.now())}</Pill>
+          <Pill>{LIVE ? 'Descubre la feria' : eventStatus(event, Date.now())}</Pill>
           <span className="eyebrow">{event.edition}</span>
           <h1>{event.name}</h1>
           <p>{event.lead}</p>
@@ -133,11 +136,11 @@ export function EventPage() {
       <div className="event-meta">
         <span>
           <CalendarDays size={19} />
-          {event.date}
+          {LIVE ? 'Programación por confirmar' : event.date}
         </span>
         <span>
           <MapPin size={19} />
-          {event.venue}
+          {LIVE ? event.location : event.venue}
         </span>
       </div>
       <p>{event.description}</p>
@@ -158,7 +161,9 @@ export function EventPage() {
         </div>
       )}
       <p className="footnote">
-        Datos y fechas heredados del prototipo Expo. Confirma la información con la organización.
+        {LIVE
+          ? 'Consulta las fechas y la programación con la organización de la feria.'
+          : 'Datos y fechas heredados del prototipo Expo. Confirma la información con la organización.'}
       </p>
     </div>
   );
@@ -176,4 +181,8 @@ export function NotFoundPage() {
       Elige una pantalla desde la navegación para continuar explorando.
     </Empty>
   );
+}
+
+export function QrPage() {
+  return LIVE ? <LiveQr /> : <DemoQrPage />;
 }

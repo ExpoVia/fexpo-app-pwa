@@ -1,3 +1,5 @@
+import { LIVE } from '@/services/config';
+import { LiveMissions } from './LiveAccount';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Check, LockKeyhole, Trophy } from 'lucide-react';
@@ -56,7 +58,7 @@ export function RewardCards({ grid = false }: { grid?: boolean }) {
     </>
   );
 }
-export function MissionsPage() {
+function DemoMissionsPage() {
   const visits = useDemo((s) => s.visits);
   const done = MISSIONS.filter((m) => missionValue(m, visits) >= m.target).length;
   return (
@@ -129,7 +131,7 @@ export function MissionsPage() {
     </div>
   );
 }
-export function RewardsPage() {
+function DemoRewardsPage() {
   return (
     <div className="stack">
       <div className="section-intro">
@@ -144,4 +146,12 @@ export function RewardsPage() {
       <RewardCards grid />
     </div>
   );
+}
+
+export function MissionsPage() {
+  return LIVE ? <LiveMissions /> : <DemoMissionsPage />;
+}
+
+export function RewardsPage() {
+  return LIVE ? <LiveMissions rewards /> : <DemoRewardsPage />;
 }
