@@ -35,6 +35,7 @@ export interface Stand {
   id: string;
   name: string;
   category: StandCategory;
+  categoryLabel?: string;
   description: string;
   zoneId: string;
   planId: string;
@@ -42,7 +43,7 @@ export interface Stand {
   tags: string[];
   activity?: string;
   promotion?: string;
-  points: 50;
+  points: number;
   featured?: boolean;
 }
 
