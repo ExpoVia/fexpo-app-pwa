@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { useDemo } from './demo';
+import { useCampusLocation } from '@/features/campus/location';
 export interface LocalProfile {
   id: string;
   name: string;
@@ -79,6 +80,7 @@ export const useLocalAccount = create<{
       },
       signOut: () => {
         generation++;
+        useCampusLocation.getState().clear();
         useDemo.getState().signOut();
         update({ profile: null });
         window.google?.accounts.id.disableAutoSelect();

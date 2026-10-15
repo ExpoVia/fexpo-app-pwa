@@ -5,6 +5,7 @@ import { nfcAvailable, readRawNfc, type RawNfcReading } from '@/services/nfc';
 import { WalletPass } from './Checkin';
 import { audioFeedback } from '@/features/audio/feedback';
 import { Pill } from '@/ui/components';
+import { useCampusLocation } from '@/features/campus/location';
 
 export function NfcProbe() {
   const [busy, setBusy] = useState(false);
@@ -37,6 +38,11 @@ export function NfcProbe() {
       if (current !== generation.current) return;
       setReading(result);
       audioFeedback.request('nfcRead');
+      try {
+        useCampusLocation.getState().locate(result.records);
+      } catch {
+        // A successful hardware probe does not imply a known stand location.
+      }
     } catch (e) {
       if (current !== generation.current) return;
       if (e instanceof DOMException && e.name === 'AbortError') return;
